@@ -1,14 +1,49 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-title>Contatos encontrados: <b>{{listaContatos.length}}</b></ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only color="dark" (click)="getContacts()">
+        <ion-icon name="md-refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-content>
+    <div class="content">
+      <ion-card *ngFor="let contact of listaContatos">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-7>
+              <div class="dados-usuario">
+                <h3><b>{{contact.displayName}}</b></h3>
+  
+                <div *ngIf="contact.phoneNumbers">
+                  <p *ngFor="let number of contact.phoneNumbers">{{number.value}}</p>
+                </div>
+  
+                <div *ngIf="contact.emails">
+                  <p *ngFor="let email of contact.emails">{{email.value}}</p>
+                </div>
+  
+              </div>
+            </ion-col>
+  
+            <ion-col col-5>
+              <div class="dados-usuario">
+                <button ion-button clear icon-only (click)="sendMail(contact)">
+                    <ion-icon ios='md-trash' name='md-mail'></ion-icon>
+                </button>
+  
+                <button ion-button clear icon-only color="secondary" (click)="setContact(contact.phoneNumbers)">
+                    <ion-icon ios='md-trash' name='md-call'></ion-icon>
+                </button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
 </ion-content>
